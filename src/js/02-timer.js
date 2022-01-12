@@ -19,6 +19,7 @@ const refs ={
 
 const {input,startBtn,timerEl,daysSpan,hoursSpan,minutesSpan,secondsSpan}= refs;
 console.log(timerEl);
+let useDate = null;
 
 const options = {
     enableTime: true,
@@ -43,37 +44,67 @@ startBtn.addEventListener('click', () => {
     timer.start();
 });
 
-const timer = {
-    isActive: false,
+class Timer  {
+
+    constructor(){
+        this.isActive = false;
+        this.setInterval = null;
+        this.btnStartRef.disabled = true;  
+               
+    }
+    
 
     start() {
         if (this.isActive) {
             return;
         }
-
+        
         const startTime = Date.now();
         this.isActive = true;
+
         this.setInterval = setInterval(() => {
-        const currentTime = Date.now();
-        const deltaTime = currentTime - startTime;
+        const currentTime = new Date();
+        const deltaTime = useDate - currentTime;
             // console.log(deltaTime);
-        // const timeComponents = convertMs(deltaTime);
+        const timeComponents = convertMs(deltaTime);
             // console.log(timeComponents );
 
-            const { days, hours, minutes, seconds } = convertMs(deltaTime);
-            updateClocck({ days, hours, minutes, seconds });
-    }, 1000);
-        
- },
-};
-timer.start()
-
-function updateClocck({ days, hours, minutes, seconds }) {
-      daysSpan.textContent = element.days;
+        daysSpan.textContent = element.days;
       hoursSpan.textContent = element.hours;
       minutesSpan.textContent = element.minutes;
       secondsSpan.textContent = element.seconds;
-}
+ 
+
+            if (deltaTime < 0) { 
+        this.stop();
+        timer.innerHTML = 'Time is over!';
+      }
+        }, 1000);
+    }
+        stop(){
+            clearInterval(this.timeComponents);
+            this.isActive = folse;
+           
+        }
+ 
+};
+
+timer.start()
+
+const timer = new Timer({
+    onTick: updateClocck,
+});
+
+flatpickr(inputRef, options)
+const timer = new Timer();
+btnStartRef.addEventListener('click', () => timer.start())
+
+// function updateClocck({ days, hours, minutes, seconds }) {
+//       daysSpan.textContent = element.days;
+//       hoursSpan.textContent = element.hours;
+//       minutesSpan.textContent = element.minutes;
+//       secondsSpan.textContent = element.seconds;
+// }
 // class Timer = {
 
 //   isActive: false,
