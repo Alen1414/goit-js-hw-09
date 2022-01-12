@@ -39,15 +39,45 @@ const options = {
 flatpickr('input[type="text"]', options);
 startBtn.disabled = true;
 
-// startBtn.addEventListener('click', () => {
-//     timer.stop();
-// });
+startBtn.addEventListener('click', () => {
+    timer.start();
+});
 
+const timer = {
+    isActive: false,
 
+    start() {
+        if (this.isActive) {
+            return;
+        }
+
+        const startTime = Date.now();
+        this.isActive = true;
+        this.setInterval = setInterval(() => {
+        const currentTime = Date.now();
+        const deltaTime = currentTime - startTime;
+            // console.log(deltaTime);
+        // const timeComponents = convertMs(deltaTime);
+            // console.log(timeComponents );
+
+            const { days, hours, minutes, seconds } = convertMs(deltaTime);
+            updateClocck({ days, hours, minutes, seconds });
+    }, 1000);
+        
+ },
+};
+timer.start()
+
+function updateClocck({ days, hours, minutes, seconds }) {
+      daysSpan.textContent = element.days;
+      hoursSpan.textContent = element.hours;
+      minutesSpan.textContent = element.minutes;
+      secondsSpan.textContent = element.seconds;
+}
 // class Timer = {
 
 //   isActive: false,
-     
+
       
 // stop() {
 //     if (this.isActive)
