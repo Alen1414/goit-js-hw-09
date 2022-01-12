@@ -47,7 +47,8 @@ npm run dev
 
 Через какое-то время живую страницу можно будет посмотреть по адресу указанному в отредактированном
 свойстве `homepage`, например
-[https://goitacademy.github.io/parcel-project-template](https://goitacademy.github.io/parcel-project-template).
+[https://goitacademy.github.io/parcel-project-template](https://goitacademy.github.io/parcel-project-template).npm
+run dev
 
 ## Файлы и папки
 
