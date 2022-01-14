@@ -54,7 +54,7 @@ function convertMs(ms) {
   const day = hour * 24;
 
   // Remaining days
-  const days = pad(Math.floor(ms / day));
+  const days = pad(Math.floor(ms / day))
   // Remaining hours
   const hours = pad(Math.floor((ms % day) / hour));
   // Remaining minutes
@@ -107,6 +107,4 @@ class Timer {
  
 flatpickr(inputRef, options)
 const timer = new Timer();
-btn
-
-StartRef.addEventListener('click', () => timer.start())
+btnStartRef.addEventListener('click', () => timer.start())
