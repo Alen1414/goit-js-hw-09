@@ -13,7 +13,11 @@ function onBtn(e) {
   let amount = Number(e.currentTarget.amount.value);
   
 
-  for (let position = 1; position <= amount; position += 1)
+  setInterval(() => {
+    if (position === amount) {
+      return;
+    }
+    position += 1;
   {
     createPromise(position, delay)
       .then(({ position,delay }) => {
@@ -48,10 +52,13 @@ function createPromise(position, delay) {
       if (shouldResolve) {
         resolve({position,delay})
       } else {
-        reject({position,delay})
-      }
-    })
-}
+        reject(({ position, delay }));
+      }, delay);
+   
+    });
+    return promise;
+  };
+
 // createPromise(2, 1500)
 //   .then(({ position, delay }) => {
 //     console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
