@@ -1,50 +1,51 @@
-import Notiflix from "notiflix";
+import { Notify } from "notiflix";
 
-const refs = {
-  form: document.querySelector('form'),
-};
 
-refs.form.addEventListener('submit', onBtnSubmit);
+const form = document.querySelector('.form');
+  
+form.addEventListener('submit', onBtn);
 
-let position = 0;
-function onBtnSubmit(elevent) {
-  elevent.preventDefault();
-  let delay = Number(elevent.currentTarget.delay.value);
-  let step = Number(elevent.currentTarget.step.value);
-  let amount = Number(elevent.currentTarget.amount.value);
+function onBtn(e) {
+  e.preventDefault();
+  
+  let delay = Number(e.currentTarget.delay.value);
+  let step = Number(e.currentTarget.step.value);
+  let amount = Number(e.currentTarget.amount.value);
+  
 
-  setInterval(() => {
-    if (position === amount) {
-      return;
-    }
-    position += 1;
+  for (let position = 0; position === amount; position += 1)
+  {
+    createPromise(position, delay)
+      .then(({ position,delay }) => {
+        setTimeout(() => {
+          Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
+        }, delay)
+      })
+      .catch(({ position, delay }) => {
+        setTimeout(() => { 
+           Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
+        },delay)
+      });
+    // delay += step;
+  }
+}
+
+   
+function createPromise(position, delay) {
+    const shouldResolve = Math.random() > 0.3;
+ 
     
-      
-   createPromise(position, delay)
-     .then(({ position, delay }) => {
-    Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`)
-    console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
-  })
-     .catch(({ position, delay }) => {
-    Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`)
-    console.log(`❌ Rejected promise ${position} in ${delay}ms`);
-  });
-  }, step)
+    return new Promise((resolve, reject) => {
+     
+      if (shouldResolve) {
+        resolve({position,delay})
+      } else {
+        reject({position,delay})
+      }
+    })
     
 }
-function createPromise(position, delay) {
-  const promise = new Promise((resolve, reject) => {
-    setInterval(() => {
-      const shouldResolve = Math.random() > 0.3;
-      if (shouldResolve) {
-        resolve(({ position, delay }));
-      }
-      reject(({ position, delay }));
-    }, delay);
- 
-  });
-  return promise;
-};
+createPromise( )
 // if (Math.round(delayTime / 1000) === 0) {
 //   console.log('Отсчет окончен');
 //   return;
