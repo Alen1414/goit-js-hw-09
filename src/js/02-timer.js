@@ -91,10 +91,11 @@ class Timer {
       hourRef.textContent = element.hours;
       minRef.textContent = element.minutes;
       secRef.textContent = element.seconds;
-      
-       if (deltaTime < 0) { 
+      console.log(deltaTime)
+       if (deltaTime < 1000) { 
         this.stop();
-        timer.innerHTML = 'Time is over!';
+         timer.innerHTML = 'Time is over!';
+         
       }
     }, 1000);
 
